@@ -11,7 +11,10 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
+        // 웹 브라우저용 (SockJS 지원)
         registry.addEndpoint("/ws").setAllowedOriginPatterns("*").withSockJS();
+        // 네이티브 앱용 (순수 WebSocket)
+        registry.addEndpoint("/ws-native").setAllowedOriginPatterns("*");
     }
 
     @Override

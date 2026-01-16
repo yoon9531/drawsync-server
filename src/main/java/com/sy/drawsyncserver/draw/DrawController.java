@@ -23,9 +23,9 @@ public class DrawController {
         // 회의 존재 여부 검증
         if (meetingService.getMeeting(meetingId).isEmpty()) {
             return;
-        }
+    }
 
-        // 해당 회의방을 구독 중인 클라이언트들에게만 전송
+    // 해당 회의방을 구독 중인 클라이언트들에게만 전송
         messagingTemplate.convertAndSend(
                 "/topic/draw/" + meetingId,
                 message

@@ -1,20 +1,33 @@
 package com.sy.drawsyncserver.meeting;
 
+import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
+@Entity
+@Table(name = "meetings")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Meeting {
+    @Id
     private String id;
+
     private String title;
+
     private String hostId;
+
     private LocalDateTime createdAt;
-    private Set<String> participants = ConcurrentHashMap.newKeySet();
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "meeting_participants", joinColumns = @JoinColumn(name = "meeting_id"))
+    @Column(name = "user_id")
+    private Set<String> participants = new HashSet<>();
 
     public Meeting(String id, String title, String hostId) {
         this.id = id;

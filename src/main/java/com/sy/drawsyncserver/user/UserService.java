@@ -2,14 +2,17 @@ package com.sy.drawsyncserver.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class UserService {
     private final UserRepository userRepository;
 
+    @Transactional
     public User signup(String id, String password) {
         if (userRepository.existsById(id)) {
             throw new IllegalArgumentException("이미 존재하는 아이디입니다.");
